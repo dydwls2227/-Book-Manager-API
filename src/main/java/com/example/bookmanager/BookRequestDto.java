@@ -14,7 +14,7 @@ public class BookRequestDto {
     private String isbn;
     private LocalDate publishedDate;
 
-    // 유효성 검증
+    // 유효성 검증 구현
     public void validate() {
         if(title==null || title.length()<1 || title.length()>100) {
             throw new IllegalArgumentException("책 타이틀은 1-100자 안에 있어야합니다.");
