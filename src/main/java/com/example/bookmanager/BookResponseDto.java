@@ -15,12 +15,12 @@ public class BookResponseDto {
     private String isbn;
     private LocalDate publishedDate;
 
-    public BookResponseDto(Book book) {
-        this.id = book.getId();
-        this.title = book.getTitle();
-        this.author = book.getAuthor();
-        this.isbn = book.getIsbn();
-        this.publishedDate = book.getPublishedDate();
+    public BookResponseDto(Long id, String title, String author, String isbn, LocalDate publishedDate) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.isbn = isbn;
+        this.publishedDate = publishedDate;
     }
 
 }
