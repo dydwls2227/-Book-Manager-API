@@ -2,7 +2,8 @@ package com.example.bookmanager;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,12 +14,16 @@ public class BookService {
 
     // 도서등록
     public BookResponseDto createBook(BookRequestDto bookRequestDto) {
+
+        bookRequestDto.validate();
+
         Book book = Book.builder()
                 .title(bookRequestDto.getTitle())
                 .author(bookRequestDto.getAuthor())
                 .isbn(bookRequestDto.getIsbn())
                 .publishedDate(bookRequestDto.getPublishedDate())
                 .build();
+
         Book savedBook = bookRepository.save(book);
 
         return BookResponseDto.builder()
@@ -33,7 +38,7 @@ public class BookService {
     // 도서조회
     public BookResponseDto getBookById(Long id) {
         // +예외처리
-        Book book = bookRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 도서를 찾을 수 없습니다."));
+        Book book = bookRepository.findById(id).orElseThrow(()->new IllegalArgumentException("도서를 찾을 수 없습니다. ID: " + id));
 
         return BookResponseDto.builder()
                 .id(book.getId())
@@ -42,6 +47,16 @@ public class BookService {
                 .isbn(book.getIsbn())
                 .publishedDate(book.getPublishedDate())
                 .build();
+    }
+
+    public Page<BookResponseDto> getAllBooks(Pageable pageable) {
+        return bookRepository.findAll(pageable).map(book -> BookResponseDto.builder()
+                .id(book.getId())
+                .title(book.getTitle())
+                .author(book.getAuthor())
+                .isbn(book.getIsbn())
+                .publishedDate(book.getPublishedDate())
+                .build());
     }
 
     // 도서 수정

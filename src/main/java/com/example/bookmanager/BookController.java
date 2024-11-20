@@ -1,7 +1,7 @@
 package com.example.bookmanager;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +19,13 @@ public class BookController {
         BookResponseDto bookResponseDto = bookService.getBookById(id);
         return ResponseEntity.ok(bookResponseDto);
     }
+
+    @GetMapping
+    public ResponseEntity<Page<BookResponseDto>> getAllBooks(Pageable pageable) {
+        Page<BookResponseDto> books = bookService.getAllBooks(pageable);
+        return ResponseEntity.ok(books);
+    }
+
 
     @PostMapping
     public ResponseEntity<BookResponseDto> createBook(@RequestBody BookRequestDto bookRequestDto) {
