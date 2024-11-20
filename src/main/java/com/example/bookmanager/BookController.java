@@ -9,36 +9,40 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/books")
 public class BookController {
     private final BookService bookService;
-
+    // 생성자
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
 
+    // 특정 id로 Get
     @GetMapping("/{id}")
     public ResponseEntity<BookResponseDto> getBookById(@PathVariable("id") Long id) {
         BookResponseDto bookResponseDto = bookService.getBookById(id);
         return ResponseEntity.ok(bookResponseDto);
     }
 
+    // 전체 조회 (페이지네이션)
     @GetMapping
     public ResponseEntity<Page<BookResponseDto>> getAllBooks(Pageable pageable) {
         Page<BookResponseDto> books = bookService.getAllBooks(pageable);
         return ResponseEntity.ok(books);
     }
 
-
+    // create
     @PostMapping
     public ResponseEntity<BookResponseDto> createBook(@RequestBody BookRequestDto bookRequestDto) {
         BookResponseDto bookResponseDto = bookService.createBook(bookRequestDto);
         return ResponseEntity.ok(bookResponseDto);
     }
 
+    // update
     @PutMapping("/{id}")
     public ResponseEntity<BookResponseDto> updateBook(@PathVariable("id") Long id, @RequestBody BookRequestDto bookRequestDto) {
         BookResponseDto bookResponseDto = bookService.updateBook(id, bookRequestDto);
         return ResponseEntity.ok(bookResponseDto);
     }
 
+    // delete
     @DeleteMapping("/{id}")
     public ResponseEntity<BookResponseDto> deleteBook(@PathVariable("id") Long id) {
         bookService.deleteBook(id);

@@ -15,6 +15,7 @@ public class BookResponseDto {
     private String isbn;
     private LocalDate publishedDate;
 
+    // 생성자
     public BookResponseDto(Long id, String title, String author, String isbn, LocalDate publishedDate) {
         this.id = id;
         this.title = title;

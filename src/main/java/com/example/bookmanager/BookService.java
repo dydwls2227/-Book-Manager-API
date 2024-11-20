@@ -14,9 +14,11 @@ public class BookService {
 
     // 도서등록
     public BookResponseDto createBook(BookRequestDto bookRequestDto) {
-
+        
+        // BookRequestDto 에서 만든 유효성검사 메소드를 사용하여, 등록하기 전 검사를 하고, 검사에 걸리면 예외처리
         bookRequestDto.validate();
-
+        
+        // 빌더 패턴으로 Book 클래스의 객체 생성
         Book book = Book.builder()
                 .title(bookRequestDto.getTitle())
                 .author(bookRequestDto.getAuthor())
@@ -25,7 +27,8 @@ public class BookService {
                 .build();
 
         Book savedBook = bookRepository.save(book);
-
+        
+        // Dto 변환 후 리턴
         return BookResponseDto.builder()
                 .id(savedBook.getId())
                 .title(savedBook.getTitle())
@@ -39,7 +42,8 @@ public class BookService {
     public BookResponseDto getBookById(Long id) {
 
         Book book = bookRepository.findById(id).orElseThrow(()->new IllegalArgumentException("도서를 찾을 수 없습니다. ID: " + id));
-
+        
+        // Dto 변환후 리턴
         return BookResponseDto.builder()
                 .id(book.getId())
                 .title(book.getTitle())
@@ -48,7 +52,8 @@ public class BookService {
                 .publishedDate(book.getPublishedDate())
                 .build();
     }
-
+    
+    // 페이지네이션을 활용한 전체 출력
     public Page<BookResponseDto> getAllBooks(Pageable pageable) {
         return bookRepository.findAll(pageable).map(book -> BookResponseDto.builder()
                 .id(book.getId())
