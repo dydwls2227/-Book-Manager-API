@@ -37,7 +37,7 @@ public class BookService {
 
     // 도서조회
     public BookResponseDto getBookById(Long id) {
-        // +예외처리
+
         Book book = bookRepository.findById(id).orElseThrow(()->new IllegalArgumentException("도서를 찾을 수 없습니다. ID: " + id));
 
         return BookResponseDto.builder()

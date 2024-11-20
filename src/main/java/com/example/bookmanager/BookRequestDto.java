@@ -22,7 +22,7 @@ public class BookRequestDto {
         if(author==null || author.length()<1 || author.length()>100) {
             throw new IllegalArgumentException("작가 이름은 1-100자 안에 있어야합니다.");
         }
-        if(publishedDate==null || publishedDate.isBefore(LocalDate.now())) {
+        if(publishedDate==null || publishedDate.isAfter(LocalDate.now())) {
             throw new IllegalArgumentException("출판일자는 지금 시각보다 적어야합니다.");
         }
         if (!isbn.matches("\\d{13}")) {
