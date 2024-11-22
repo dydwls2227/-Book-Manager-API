@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Book {
-    // 엔터티 구성 요소
+    // 엔터티 구성
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
