@@ -17,7 +17,7 @@ public class BookService {
     // 도서등록
     public BookResponseDto createBook(BookRequestDto bookRequestDto) {
         
-        // BookRequestDto 에서 만든 유효성검사 메소드를 사용하여, 등록하기 전 검사를 하고, 검사에 걸리면 예외처리
+        // BookRequestDto 에서 만든 유효성검사 메소드를 사용하여, 등록하기 전 검사를 하고, 검사에 걸리면 오류 발생
         bookRequestDto.validate();
         
         // 빌더 패턴으로 Book 클래스의 객체 생성
