@@ -25,7 +25,7 @@ public class BookController {
         return ResponseEntity.ok(bookResponseDto);
     }
 
-    // 전체 조회 (페이지네이션)
+    // 전체 조회 (페이지네이션 활용)
     @GetMapping
     public ResponseEntity<Page<BookResponseDto>> getAllBooks(Pageable pageable) {
         Page<BookResponseDto> books = bookService.getAllBooks(pageable);
