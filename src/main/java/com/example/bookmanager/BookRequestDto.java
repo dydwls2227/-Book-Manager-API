@@ -15,7 +15,7 @@ public class BookRequestDto {
     private String isbn;
     private LocalDate publishedDate;
 
-    // 유효성 검증 구현
+    // 유효성 검사 구현
     // Post man 에서는 http 오류 발생, 스프링 부트(콘솔) 에서 출력되어짐
     public void validate() {
         if(title==null || title.length()<1 || title.length()>100) {
