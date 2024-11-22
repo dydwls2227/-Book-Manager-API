@@ -45,5 +45,5 @@ BookRequestDto 클래스에서 유효성 검사를 구현 했습니다.
 해당 조건에 맞지 않으면 IllegalArgumentException을 발생시킵니다.
 
 # 조회 시 예외 처리 방식 설명
-도서 조회시 해당 ID의 도서가 존재하지 않으면 IllegalArgumentException을 발생시키고
-"해당 도서를 찾을 수 없습니다" 라는 메시지를 출력합니다.
+도서 조회시 해당 ID의 도서가 존재하지 않으면 sevice층에서 book 객체의 기본값들을 설정하여 반환하게 되고
+컨트롤러 층에서 반환받은 book 객체의 title이 기본값으로 설정한 title과 동일하다면 404(Not Found) 통신 에러가 나도록 설정하였습니다.
