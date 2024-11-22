@@ -18,6 +18,10 @@ public class BookController {
     @GetMapping("/{id}")
     public ResponseEntity<BookResponseDto> getBookById(@PathVariable("id") Long id) {
         BookResponseDto bookResponseDto = bookService.getBookById(id);
+        // Dto title이 not found면 404 통신 에러 전송
+        if(bookResponseDto.getTitle().equals("Not Found")){
+            return ResponseEntity.status(404).body(bookResponseDto);
+        }
         return ResponseEntity.ok(bookResponseDto);
     }
 

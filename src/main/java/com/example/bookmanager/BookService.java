@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 @RequiredArgsConstructor
 
@@ -40,8 +42,9 @@ public class BookService {
 
     // 도서조회
     public BookResponseDto getBookById(Long id) {
-
-        Book book = bookRepository.findById(id).orElseThrow(()->new IllegalArgumentException("도서를 찾을 수 없습니다. ID: " + id));
+        // orElse 메소드는 해당 값이 null 이든 아니든 관계없이 항상 불린다.
+        //orElseGet 메소드는 해당 값이 null 일 때만 불린다.
+        Book book = bookRepository.findById(id).orElseGet(()-> ErrorBook(id));
         
         // Dto 변환후 리턴
         return BookResponseDto.builder()
@@ -51,6 +54,16 @@ public class BookService {
                 .isbn(book.getIsbn())
                 .publishedDate(book.getPublishedDate())
                 .build();
+    }
+
+    public Book ErrorBook(Long id) {
+        Book errorBook = new Book();
+        errorBook.setId((long) -1);
+        errorBook.setTitle("Not Found");
+        errorBook.setAuthor("Unknown");
+        errorBook.setIsbn("N/A");
+        errorBook.setPublishedDate(LocalDate.now());
+        return errorBook;
     }
     
     // 페이지네이션을 활용한 전체 출력
